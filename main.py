@@ -1,16 +1,27 @@
-# This is a sample Python script.
+import json
+import requests
+import conf
 
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+sandbox = "https://devnetsandbox-usw1-reservation.cisco.com:20273"
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def obtener_token(usuario, clave):
+    url = sandbox + "/api/aaaLogin.json"
+    body = {
+        "aaaUser": {
+            "attributes": {
+                "name": usuario,
+                "pwd": clave
+            }
+        }
+    }
+    cabecera = {
+        "Content-Type": "application/json"
+    }
+    requests.packages.urllib3.disable_warnings()
+    respuesta = requests.post(url, headers=cabecera, data=json.dumps(body), verify=False)
+    token = respuesta.json()['imdata'][0]['aaaLogin']['attributes']['token']
+    return token
+token = obtener_token(conf.usuario, conf.clave)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(token)
