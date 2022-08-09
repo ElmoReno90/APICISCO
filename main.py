@@ -2,7 +2,7 @@ import json
 import requests
 import conf
 
-sandbox = "https://devnetsandbox-usw1-reservation.cisco.com:20273"
+sandbox = "https://sandboxapicdc.cisco.com"
 
 
 def obtener_token(usuario, clave):
