@@ -62,7 +62,21 @@ def sensor3():
     }
 
     requests.packages.urllib3.disable_warnings()
-    respuesta = requests.get(sandbox + "/api/mo/topology/pod-101/node-1/sys/ch/bslot/board/sensor-3.json", headers=cabecera, cookies=elmocookie, verify=False)
-    print(respuesta.json())
+    respuesta_sensor = requests.get(sandbox + "/api/mo/topology/pod-1/node-101/sys/ch/bslot/board/sensor-3.json", headers=cabecera, cookies=elmocookie, verify=False)
+    print(respuesta_sensor.json())
 
 sensor3()
+
+def firmware():
+    cabecera = {
+        "Content-Type": "application/json"
+    }
+    elmocookie = {
+        "APIC-Cookie": obtener_token(admpw.user, admpw.passwd)
+    }
+
+    requests.packages.urllib3.disable_warnings()
+    respuesta_firmware = requests.get(sandbox + "/api/class/firmwareCtrlrFwStatusCont.json?query-target=subtree&target-subtree-class=firmwareCtrlrRunning", headers=cabecera, cookies=elmocookie, verify=False)
+    print(respuesta_firmware.json())
+
+firmware()
