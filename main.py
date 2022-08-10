@@ -1,4 +1,6 @@
 import json
+
+import controller as controller
 import requests
 import admpw
 
@@ -44,10 +46,12 @@ def top_system():
 
     for i in range(0, total_nodos):
         dn_local = respuesta.json()["imdata"][i]["topSystem"]["attributes"]["dn"]
-
+        print(dn_local)
 
 top_system()
 
+
+# GET http://apic-ip-address/api/mo/topology/pod-1/node-1/sys/ch/bslot/board/sensor-3.json
 
 def sensor3():
     cabecera = {
@@ -56,12 +60,9 @@ def sensor3():
     elmocookie = {
         "APIC-Cookie": obtener_token(admpw.user, admpw.passwd)
     }
-    requests.packages.urllib3.disable_warnings()
-    respuesta = requests.get(sandbox + "/api/class/firmware:CtrlrFwStatusCont.json?"
-                                       "query-target=subtree"
-                                       "target-subtree-class=firmwareCtrlrRunning"
-                             , headers=cabecera, cookies=elmocookie, verify=False)
-    print(respuesta)
 
+    requests.packages.urllib3.disable_warnings()
+    respuesta = requests.get(sandbox + "/api/mo/topology/pod-101/node-1/sys/ch/bslot/board/sensor-3.json", headers=cabecera, cookies=elmocookie, verify=False)
+    print(respuesta.json())
 
 sensor3()
