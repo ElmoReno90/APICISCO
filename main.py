@@ -79,6 +79,8 @@ def firmware():
 
     requests.packages.urllib3.disable_warnings()
     respuesta_firmware = requests.get(sandbox + "/api/class/firmwareCtrlrFwStatusCont.json?query-target=subtree&target-subtree-class=firmwareCtrlrRunning", headers=cabecera, cookies=elmocookie, verify=False)
-    print(respuesta_firmware.json())
+    #print(respuesta_firmware.json())
+    print(respuesta_firmware.request.headers) #Request
+    print(respuesta_firmware.headers)         #Response
 
 firmware()
